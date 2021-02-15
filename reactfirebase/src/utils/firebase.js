@@ -16,6 +16,18 @@ const firebaseConfig ={
 
 firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
+export const carsCollection = db.collection('cars');
+// export const carsCollection = db.collection('any');
+
+// References
+
+// export const siteRef = db.doc('site/business');
+
+
+//Sub Collections
+export const employeeRef = db.collection('site').doc('employess').collection('admins');
+
+
 
 // db.collection('cars').get().then(
 //      snapshot =>{

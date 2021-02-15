@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import {db} from '../utils/firebase'
+import {carsCollection, employeeRef} from '../utils/firebase'
 import {firebaseLooper} from '../utils/tools';
-
+import Form from './forms';
 export default class Cars extends Component {
 
 
@@ -9,9 +9,15 @@ export default class Cars extends Component {
         cars : null
     }
 
-    componentDidMount(){
 
-        db.collection('cars').get().then(
+
+    getAllCars(){
+
+        carsCollection
+        .orderBy('price' , 'asc')
+        // .where('color','==','blue')
+        .get()
+        .then(
             snapshot =>{
                 const cars = firebaseLooper(snapshot);
                 this.setState({
@@ -23,6 +29,25 @@ export default class Cars extends Component {
                console.log(e);
            }
        )
+
+    }
+
+    componentDidMount(){
+
+            this.getAllCars();
+
+
+            //GET DOC BY ID
+            carsCollection.doc('uxv4JL9K71zVc8kq55AT').get().then( snapshot =>{
+
+                console.log(snapshot.data())
+            }
+            )
+       
+    //    employeeRef.get().then((snapshot) => {
+    //        const employess = firebaseLooper(snapshot);
+    //        console.log(employess)
+    //    })
        
     }
     handleCarData = (cars) => (
@@ -42,7 +67,7 @@ export default class Cars extends Component {
 
         return (
             <>
-            
+            <Form />
             <table className="table table-dark">
                     <thead>
                         <tr>
